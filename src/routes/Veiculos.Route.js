@@ -9,7 +9,7 @@ veiculosRouter.get("/", async (req, res) => {
         res.json(veiculos);
     }catch (error) {
     
-        console.error (error);
+        console.error ("erro ao encontrar veiculos");
     }
 });
 veiculosRouter.get("/:id", async (req, res) => {
@@ -19,7 +19,7 @@ veiculosRouter.get("/:id", async (req, res) => {
         res.json(veiculos);
     }catch (error) {
     
-        console.error (error);
+        console.error ("erro ao encontrar id");
     }
 });
 veiculosRouter.post("/", async (req, res) => {
@@ -27,6 +27,15 @@ veiculosRouter.post("/", async (req, res) => {
         const veiculos = await veiculosServices.create(req.body);
          res.status(201).json(veiculos);
     }catch (error) {
-        console.error (error);
+        console.error ("erro ao criar veiculo");
+    }
+});
+veiculosRouter.delete("/:id", async (req, res) => {
+    try {
+        const veiculoId = req.params.id
+        const veiculo = await veiculosServices.delete(veiculoId);
+         res.status(201).json(veiculo);
+    }catch (error) {
+        console.error ("erro ao deletar veiculo");
     }
 });
