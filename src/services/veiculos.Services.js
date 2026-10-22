@@ -12,14 +12,25 @@ class veiculosService{
     }
 
     async create({modelo, marca, ano, placa}) {
-        const res = await pool.query("INSERT INTO veiculos (modelo,marca,ano,placa) VALUES ($1, $2, $3, $4) RETURNING *", [modelo,marca,ano,placa]);
-        return res.rows[0]
+        const res = await pool.query("INSERT INTO veiculos (modelo,marca,ano,placa) VALUES ($1, $2, $3, $4) RETURNING *", [modelo, marca, ano, placa]);
+        return {
+            message: "Veiculo criado com sucesso",
+            veiculo: res.rows[0]
+        }
     }
 
     async delete(id) {
         const res = await pool.query("DELETE FROM veiculos WHERE id = $1 RETURNING *",[id])
         return {
-            message: "veiculo deletado com sucesso",
+            message: "Veiculo deletado com sucesso",
+            veiculo: res.rows[0]
+        }
+    }
+
+    async updatePut(id, data) {
+        const res = await pool.query("UPDATE veiculos SET modelo=$2, marca=$3, ano=$4, placa=$5 WHERE id = $1 RETURNING *",[id, data.modelo, data.marca, data.ano, data.placa])
+        return {
+            message: "Veiculo atualizado com sucesso",
             veiculo: res.rows[0]
         }
     }
